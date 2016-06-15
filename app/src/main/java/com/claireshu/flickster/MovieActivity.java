@@ -2,11 +2,15 @@ package com.claireshu.flickster;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ListView;
 
+import com.claireshu.flickster.models.Movie;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -14,23 +18,19 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 public class MovieActivity extends AppCompatActivity {
+    ArrayList<Movie> movies;
+    ListView lvMovies;
+    MoviesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
 
-        // 1. Get the actual movies
-        ArrayList<Movie> movies = Movie.getFakeMovies();
 
-        // 2. Get the ListView that we want to populate
-        ListView lvMovies = (ListView) findViewById(R.id.lvMovies);
-
-        // 3. Create an ArrayAdapter
-        // ArrayAdapter<Movie> adapter = new ArrayAdapter<Movie>(this, android.R.layout.simple_list_item_1, movies);
-        MoviesAdapter adapter = new MoviesAdapter(this, movies);
-
-        // 4. Associate the adapter with the ListView
+        lvMovies = (ListView) findViewById(R.id.lvMovies);
+        movies = new ArrayList<>();
+        adapter = new MoviesAdapter(this, movies);
         if (lvMovies != null) {
             lvMovies.setAdapter(adapter);
         }
@@ -42,6 +42,15 @@ public class MovieActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                JSONArray movieJsonResults = null;
+                try {
+                    movieJsonResults = response.getJSONArray("results");
+                    movies.addAll(Movie.fromJsonArray(movieJsonResults));
+                    adapter.notifyDataSetChanged();
+                    Log.d("DEBUG", movieJsonResults.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
