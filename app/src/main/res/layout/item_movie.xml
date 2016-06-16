@@ -36,22 +36,4 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bt_details"
-        android:id="@+id/btDetails"
-        android:onClick="onDetails"
-        android:focusable="false"
-        android:layout_below="@+id/tvOverview"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/ivPoster"
-        android:layout_toEndOf="@+id/ivPoster"
-        android:textColor="#FFFFFF"
-        android:background="#40818181"
-        android:textAlignment="center" />
-
-
 </RelativeLayout>
