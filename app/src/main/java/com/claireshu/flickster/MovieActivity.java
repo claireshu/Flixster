@@ -1,9 +1,13 @@
 package com.claireshu.flickster;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.claireshu.flickster.models.Movie;
@@ -22,6 +26,7 @@ public class MovieActivity extends AppCompatActivity {
     ArrayList<Movie> movies;
     ListView lvMovies;
     MoviesAdapter adapter;
+    Button btDetails;
     private SwipeRefreshLayout swipeContainer;
     AsyncHttpClient client;
     String url;
@@ -52,6 +57,22 @@ public class MovieActivity extends AppCompatActivity {
             lvMovies.setAdapter(adapter);
         }
 
+
+        lvMovies.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent viewDetails = new Intent(MovieActivity.this, MovieDetails.class);
+                        viewDetails.putExtra("position", position);
+                        viewDetails.putExtra("title", movies.get(position).getTitle());
+                        viewDetails.putExtra("rating", movies.get(position).getRating());
+                        viewDetails.putExtra("popularity", movies.get(position).getPopularity());
+                        viewDetails.putExtra("overview", movies.get(position).getOverview());
+                        startActivity(viewDetails);
+                    }
+                }
+        );
+
         url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
 
         client = new AsyncHttpClient();
@@ -76,8 +97,27 @@ public class MovieActivity extends AppCompatActivity {
             }
         });
     }
+//
+//    public void setUpListViewListener() {
+//        lvMovies.setOnItemClickListener(
+//                new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        Intent viewDetails = new Intent(MovieActivity.this, MovieDetails.class);
+//                        viewDetails.putExtra("position", position);
+//                        viewDetails.putExtra("title", movies.get(position).getTitle());
+//                        viewDetails.putExtra("rating", movies.get(position).getRating());
+//                        viewDetails.putExtra("popularity", movies.get(position).getPopularity());
+//                        viewDetails.putExtra("overview", movies.get(position).getOverview());
+//                        startActivity(viewDetails);
+//                    }
+//                }
+//        );
+//    }
 
     public void fetchTimelineAsync(int page) {
+        // Send the network request to fetch the updated data
+        // `client` here is an instance of Android Async HTTP
         client.get(url, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -104,4 +144,6 @@ public class MovieActivity extends AppCompatActivity {
         });
     }
 
+    public void onDetails(View view) {
+    }
 }

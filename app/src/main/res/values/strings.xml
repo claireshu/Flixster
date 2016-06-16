@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Flickster</string>
     <string name="backdrop_image">Backdrop Image</string>
+    <string name="details">Details</string>
+    <string name="bt_details">details</string>
+    <string name="Rating" />
+    <string name="rating_details">Rating</string>
+    <string name="popularity_details" />
+    <string name="pop_details">Popularity</string>
+    <string name="back_details">back</string>
 </resources>

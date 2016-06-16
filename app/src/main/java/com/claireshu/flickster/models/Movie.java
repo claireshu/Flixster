@@ -27,16 +27,29 @@ public class Movie {
         return String.format("https://image.tmdb.org/t/p/w342/%s", backdropUrl);
     }
 
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
     public String title;
     public String posterUrl;
     public String overview;
     public String backdropUrl;
+    public int rating;
+
+    public int popularity;
 
     public Movie(JSONObject jsonObject) throws JSONException {
         this.overview = jsonObject.getString("overview");
         this.title = jsonObject.getString("title");
         this.posterUrl = jsonObject.getString("poster_path");
         this.backdropUrl = jsonObject.getString("backdrop_path");
+        this.rating = jsonObject.getInt("vote_average");
+        this.popularity = jsonObject.getInt("popularity");
     }
 
     public static ArrayList<Movie> fromJsonArray(JSONArray array){
