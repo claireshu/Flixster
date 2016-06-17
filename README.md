@@ -21,13 +21,14 @@ The following **optional** features are implemented:
 * [x] Improved the user interface by experimenting with styling and coloring.
 * [x] Apply rounded corners for the poster or background images using [Picasso transformations](https://guides.codepath.com/android/Displaying-Images-with-the-Picasso-Library#other-transformations)
 * [ ] Apply the popular [Butterknife annotation library](http://guides.codepath.com/android/Reducing-View-Boilerplate-with-Butterknife) to reduce boilerplate code.
-* [ ] Allow video trailers to be played in full-screen using the YouTubePlayerView from the details screen.
+* [x] Allow video trailers to be played in full-screen using the YouTubePlayerView from the details screen.
 
 The following **additional** features are implemented:
 
 * [x] Search bar functionality added
 * [x] Toggle in Action Bar in between now playing and popular movies 
 * [x] Refresh display by dragging downwards for new data added 
+* [x] Launcher icon changed
 
 ## Video Walkthrough
 
