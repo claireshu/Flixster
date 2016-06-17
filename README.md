@@ -27,6 +27,7 @@ The following **additional** features are implemented:
 
 * [x] Search bar functionality added
 * [x] Toggle in Action Bar in between now playing and popular movies 
+* [x] Refresh display by dragging downwards for new data added 
 
 ## Video Walkthrough
 
