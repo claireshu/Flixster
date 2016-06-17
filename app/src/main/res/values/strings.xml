@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Flickster</string>
+    <string name="app_name">Flixster</string>
     <string name="backdrop_image">Backdrop Image</string>
     <string name="details">Details</string>
     <string name="bt_details">details</string>
@@ -8,4 +8,8 @@
     <string name="popularity_details" />
     <string name="pop_details">Popularity</string>
     <string name="back_details">back</string>
+    <string name="now_playing">NOW PLAYING</string>
+    <string name="popular_trending"><![CDATA[POPULAR & TRENDING]]></string>
+    <string name="font">fonts/Lato-Light.ttf</string>
+    <string name="font_test">Lato-Light.ttf</string>
 </resources>

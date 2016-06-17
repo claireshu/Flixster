@@ -21,7 +21,7 @@
         android:layout_alignTop="@+id/ivPoster"
         android:layout_toRightOf="@+id/ivPoster"
         android:layout_toEndOf="@+id/ivPoster"
-        android:paddingLeft="0dp"
+        android:paddingLeft="10dp"
         android:paddingTop="0dp"
         android:paddingBottom="5dp" />
 
@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/tvOverview"
+        android:paddingLeft="10dp"
         android:layout_below="@+id/tvTitle"
         android:layout_alignLeft="@+id/tvTitle"
         android:layout_alignStart="@+id/tvTitle"

@@ -2,6 +2,7 @@ package com.claireshu.flickster;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
  * Created by claireshu on 6/15/16.
  */
 public class MoviesAdapter extends ArrayAdapter<Movie> {
+    Typeface customFont;
     private static class ViewHolder {
         TextView tvTitle;
         TextView tvOverview;
@@ -28,10 +30,13 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
     public MoviesAdapter (Context context, ArrayList<Movie> movies) {
         super(context, R.layout.item_movie, movies);
+        customFont = Typeface.createFromAsset(context.getAssets(), "fonts/Lato-Light.ttf");
+
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         // Get the data item for this position
         Movie movie = getItem(position);
 
@@ -54,6 +59,10 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         // Populate the data into the template view using the data object
         viewHolder.tvTitle.setText(movie.getTitle());
         viewHolder.tvOverview.setText(movie.getOverview());
+        viewHolder.tvTitle.setTypeface(customFont);
+        viewHolder.tvOverview.setTypeface(customFont);
+
+
         String imageUri = null;
         Context context = getContext();
         if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -64,11 +73,9 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         } else if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             imageUri = movie.getPosterUrl();
             Picasso.with(getContext()).load(imageUri)
-                    .placeholder(R.drawable.portrait_placeholder).resize(500, 0)
+                    .placeholder(R.drawable.portrait_placeholder)
                     .transform(new RoundedCornersTransformation(10, 10)).into(viewHolder.ivPoster);
         }
-
-        //Log.d("MoviesAdapter", "Position:" + position);
 
         // Return the completed view to render on screen
         return convertView;
