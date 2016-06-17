@@ -208,6 +208,7 @@ public class MovieActivity extends AppCompatActivity {
                         viewDetails.putExtra("rating", movies.get(position).getRating());
                         viewDetails.putExtra("popularity", movies.get(position).getPopularity());
                         viewDetails.putExtra("overview", movies.get(position).getOverview());
+                        viewDetails.putExtra("id", movies.get(position).getId());
                         startActivity(viewDetails);
                     }
                 }

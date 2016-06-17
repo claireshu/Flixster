@@ -35,11 +35,16 @@ public class Movie {
         return rating;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String title;
     public String posterUrl;
     public String overview;
     public String backdropUrl;
     public int rating;
+    public int id;
 
     public int popularity;
 
@@ -50,6 +55,7 @@ public class Movie {
         this.backdropUrl = jsonObject.getString("backdrop_path");
         this.rating = jsonObject.getInt("vote_average");
         this.popularity = jsonObject.getInt("popularity");
+        this.id = jsonObject.getInt("id");
     }
 
     public static ArrayList<Movie> fromJsonArray(JSONArray array){
@@ -66,8 +72,4 @@ public class Movie {
         return results;
     }
 
-//    @Override
-//    public String toString() {
-//        return title;
-//    }
 }

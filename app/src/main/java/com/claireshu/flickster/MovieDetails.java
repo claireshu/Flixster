@@ -1,5 +1,6 @@
 package com.claireshu.flickster;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -20,6 +21,7 @@ public class MovieDetails extends AppCompatActivity {
     Typeface customFont;
     TextView tvRating;
     TextView tvPopularity;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class MovieDetails extends AppCompatActivity {
         String overview = getIntent().getStringExtra("overview");
         int rating = getIntent().getIntExtra("rating", 0);
         int popularity = getIntent().getIntExtra("popularity", 0);
+        id = getIntent().getIntExtra("id", 0);
 
         // displays and sets all data on screen, sets font to customFont
         tvTitle = (TextView) findViewById(R.id.tvTitle);
@@ -82,5 +85,11 @@ public class MovieDetails extends AppCompatActivity {
 
     public void onReturnMain(View view) {
         this.finish();
+    }
+
+    public void onWatchVideo(View view) {
+        Intent viewVideo = new Intent(MovieDetails.this, MovieVideo.class);
+        viewVideo.putExtra("id", id);
+        startActivity(viewVideo);
     }
 }

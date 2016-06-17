@@ -12,4 +12,5 @@
     <string name="popular_trending"><![CDATA[POPULAR & TRENDING]]></string>
     <string name="font">fonts/Lato-Light.ttf</string>
     <string name="font_test">Lato-Light.ttf</string>
+    <string name="trailer">trailer</string>
 </resources>

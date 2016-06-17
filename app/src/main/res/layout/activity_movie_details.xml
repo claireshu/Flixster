@@ -81,5 +81,17 @@
             android:layout_below="@+id/tvOverview"
             android:layout_centerHorizontal="true" />
 
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/trailer"
+            android:id="@+id/btVideo"
+            android:onClick="onWatchVideo"
+            android:layout_below="@+id/button"
+            android:layout_centerHorizontal="true"
+            android:layout_alignLeft="@id/button"
+            android:layout_alignRight="@id/button"/>
+
     </RelativeLayout>
 </ScrollView>
