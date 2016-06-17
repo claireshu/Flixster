@@ -59,12 +59,12 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             imageUri = movie.getBackdropUrl();
             Picasso.with(getContext()).load(imageUri)
-                    .placeholder(R.drawable.land_placeholder)
+                    .placeholder(R.drawable.land_placeholder).resize(500,0)
                     .transform(new RoundedCornersTransformation(10, 10)).into(viewHolder.ivPoster);
         } else if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             imageUri = movie.getPosterUrl();
             Picasso.with(getContext()).load(imageUri)
-                    .placeholder(R.drawable.portrait_placeholder)
+                    .placeholder(R.drawable.portrait_placeholder).resize(500, 0)
                     .transform(new RoundedCornersTransformation(10, 10)).into(viewHolder.ivPoster);
         }
 

@@ -12,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.claireshu.flickster.models.Movie;
@@ -31,10 +30,10 @@ public class MovieActivity extends AppCompatActivity {
     ArrayList<Movie> movies;
     ListView lvMovies;
     MoviesAdapter adapter;
-    Button btDetails;
     private SwipeRefreshLayout swipeContainer;
     AsyncHttpClient client;
     String url;
+    boolean toggleMode = true;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -79,7 +78,6 @@ public class MovieActivity extends AppCompatActivity {
             }
         });
         return super.onCreateOptionsMenu(menu);
-
     }
 
     @Override
@@ -108,10 +106,18 @@ public class MovieActivity extends AppCompatActivity {
             lvMovies.setAdapter(adapter);
         }
 
-
         setUpListViewListener();
 
-        url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+        refresh();
+    }
+
+    public void refresh() {
+        toggleMode = !toggleMode;
+        if (toggleMode) {
+            url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+        } else {
+            url = "https://api.themoviedb.org/3/movie/popular?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+        }
 
         client = new AsyncHttpClient();
         client.get(url, new JsonHttpResponseHandler(){
@@ -121,6 +127,7 @@ public class MovieActivity extends AppCompatActivity {
                 JSONArray movieJsonResults = null;
                 try {
                     movieJsonResults = response.getJSONArray("results");
+                    movies.clear();
                     movies.addAll(Movie.fromJsonArray(movieJsonResults));
                     adapter.notifyDataSetChanged();
                     Log.d("DEBUG", movieJsonResults.toString());
@@ -162,9 +169,10 @@ public class MovieActivity extends AppCompatActivity {
                 JSONArray movieJsonResults = null;
                 try {
                     movieJsonResults = response.getJSONArray("results");
+                    movies.clear();
                     movies.addAll(Movie.fromJsonArray(movieJsonResults));
                     adapter.notifyDataSetChanged();
-                    Log.d("DEBUG", movieJsonResults.toString());
+                    //Log.d("DEBUG", movieJsonResults.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -182,6 +190,9 @@ public class MovieActivity extends AppCompatActivity {
         });
     }
 
-    public void onDetails(View view) {
+    public void onSwitchModes(MenuItem item) {
+        refresh();
+        adapter.notifyDataSetChanged();
+        Log.d("DEBUG", "hello");
     }
 }
