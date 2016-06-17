@@ -37,7 +37,7 @@ public class MovieVideo extends YouTubeBaseActivity {
                 try {
                     videoJsonResults = response.getJSONArray("results");
                     key = videoJsonResults.getJSONObject(0).getString("key");
-                    Log.d("DEBUG", videoJsonResults.toString());
+                    Log.d("DEBUG", key);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -56,7 +56,6 @@ public class MovieVideo extends YouTubeBaseActivity {
                     @Override
                     public void onInitializationSuccess(YouTubePlayer.Provider provider,
                                                         YouTubePlayer youTubePlayer, boolean b) {
-
 
                         // do any work here to cue video, play video, etc.
                         youTubePlayer.cueVideo(key);
