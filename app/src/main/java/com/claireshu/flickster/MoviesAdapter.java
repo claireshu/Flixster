@@ -37,12 +37,12 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        // Get the data item for this position
+        // get the data item for this position
         Movie movie = getItem(position);
 
         ViewHolder viewHolder;
 
-        // Check if an existing view is being reused, otherwise inflate the view
+        // check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -56,13 +56,13 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        // Populate the data into the template view using the data object
+        // populate the data into the template view using the data object
         viewHolder.tvTitle.setText(movie.getTitle());
         viewHolder.tvOverview.setText(movie.getOverview());
         viewHolder.tvTitle.setTypeface(customFont);
         viewHolder.tvOverview.setTypeface(customFont);
 
-
+        // changes the display photo based on the orientation, handles placeholder images
         String imageUri = null;
         Context context = getContext();
         if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -77,7 +77,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
                     .transform(new RoundedCornersTransformation(10, 10)).into(viewHolder.ivPoster);
         }
 
-        // Return the completed view to render on screen
+        // return the completed view to render on screen
         return convertView;
     }
 }

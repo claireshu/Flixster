@@ -26,22 +26,25 @@ public class MovieDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
+        // sets custom font to lato
         customFont = Typeface.createFromAsset(this.getAssets(), "fonts/Lato-Light.ttf");
 
+        // sets the action bar text font to customFont
         SpannableString s = new SpannableString("Flixster");
         com.claireshu.flickster.TypefaceSpan typeface = new com.claireshu.flickster.TypefaceSpan(this, "Lato-Light.ttf");
         s.setSpan(typeface, 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        // Update the action bar title with the TypefaceSpan instance
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(s);
 
+        // stores data received
         String title = getIntent().getStringExtra("title");
         String overview = getIntent().getStringExtra("overview");
         int rating = getIntent().getIntExtra("rating", 0);
         int popularity = getIntent().getIntExtra("popularity", 0);
 
+        // displays and sets all data on screen, sets font to customFont
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(title);
         tvTitle.setTypeface(customFont);
@@ -64,10 +67,10 @@ public class MovieDetails extends AppCompatActivity {
 
     }
 
+    // handles when the back arrow is pressed to go back to home page
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // This is the up button
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 // overridePendingTransition(R.animator.anim_left, R.animator.anim_right);

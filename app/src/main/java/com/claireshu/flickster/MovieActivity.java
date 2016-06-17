@@ -35,15 +35,22 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 public class MovieActivity extends AppCompatActivity {
+    // for movie list view related updates
     ArrayList<Movie> movies;
     ListView lvMovies;
     MoviesAdapter adapter;
+
+    // for refreshing layout
     private SwipeRefreshLayout swipeContainer;
     AsyncHttpClient client;
+
+    // for toggling between now playing and popular movies
     String url;
     boolean toggleMode = true;
-    Typeface customFont;
     TextView tvMode;
+
+    // custom font creation
+    Typeface customFont;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -55,6 +62,8 @@ public class MovieActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
+
+        // actionbar search function
         MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -63,12 +72,14 @@ public class MovieActivity extends AppCompatActivity {
                 // perform query here
                 int position = -1;
 
+                // checks to see if the movie is found
                 for (int i = 0; i < movies.size(); i++) {
                     if (query.equalsIgnoreCase(movies.get(i).getTitle())) {
                         position = i;
                     }
                 }
 
+                // display if the movie is found
                 if (position != -1) {
                     Intent viewDetails = new Intent(MovieActivity.this, MovieDetails.class);
 
@@ -81,8 +92,6 @@ public class MovieActivity extends AppCompatActivity {
                     startActivity(viewDetails);
                 }
 
-                // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
-                // see https://code.google.com/p/android/issues/detail?id=24599
                 searchView.clearFocus();
 
                 return true;
@@ -101,18 +110,24 @@ public class MovieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
 
+        // sets the action bar text font to customFont
         SpannableString s = new SpannableString("Flixster");
         com.claireshu.flickster.TypefaceSpan typeface = new com.claireshu.flickster.TypefaceSpan(this, "Lato-Light.ttf");
         s.setSpan(typeface, 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        // Update the action bar title with the TypefaceSpan instance
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+        // sets the now playing and popular texts to customFont
+        tvMode = (TextView) findViewById(R.id.tvMode);
+        tvMode.setTypeface(customFont);
+
         getSupportActionBar().setTitle(s);
 
         customFont = Typeface.createFromAsset(getAssets(), "fonts/Lato-Light.ttf");
 
-
+        // refreshes data of movies from api
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -127,6 +142,7 @@ public class MovieActivity extends AppCompatActivity {
                 android.R.color.holo_red_light);
 
 
+        // handles list view for movies being displayed
         lvMovies = (ListView) findViewById(R.id.lvMovies);
         movies = new ArrayList<>();
         adapter = new MoviesAdapter(this, movies);
@@ -136,11 +152,8 @@ public class MovieActivity extends AppCompatActivity {
 
         setUpListViewListener();
 
+        // for refreshing movies
         refresh();
-
-        tvMode = (TextView) findViewById(R.id.tvMode);
-        tvMode.setTypeface(customFont);
-
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -148,6 +161,7 @@ public class MovieActivity extends AppCompatActivity {
     }
 
     public void refresh() {
+        // changes url to toggle between now playing and popular
         toggleMode = !toggleMode;
         if (toggleMode) {
             url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
@@ -159,6 +173,7 @@ public class MovieActivity extends AppCompatActivity {
             tvMode.setText(R.string.popular_trending);
         }
 
+        // refreshes movie data from api
         client = new AsyncHttpClient();
         client.get(url, new JsonHttpResponseHandler() {
             @Override
@@ -183,6 +198,7 @@ public class MovieActivity extends AppCompatActivity {
         });
     }
 
+    // handles switching to different activity (movie details) upon click
     private void setUpListViewListener() {
         lvMovies.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
@@ -199,9 +215,8 @@ public class MovieActivity extends AppCompatActivity {
         );
     }
 
+    // refreshing function for pulling data
     public void fetchTimelineAsync(int page) {
-        // Send the network request to fetch the updated data
-        // `client` here is an instance of Android Async HTTP
         client.get(url, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -211,15 +226,11 @@ public class MovieActivity extends AppCompatActivity {
                     movies.clear();
                     movies.addAll(Movie.fromJsonArray(movieJsonResults));
                     adapter.notifyDataSetChanged();
-                    //Log.d("DEBUG", movieJsonResults.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                // Remember to CLEAR OUT old items before appending in the new ones
                 adapter.clear();
-                // ...the data has come back, add new items to your adapter...
                 adapter.addAll(Movie.fromJsonArray(movieJsonResults));
-                // Now we call setRefreshing(false) to signal refresh has finished
                 swipeContainer.setRefreshing(false);
             }
 
@@ -229,6 +240,7 @@ public class MovieActivity extends AppCompatActivity {
         });
     }
 
+    // runs when switch mode button toggle is clicked
     public void onSwitchModes(MenuItem item) {
         refresh();
         adapter.notifyDataSetChanged();
