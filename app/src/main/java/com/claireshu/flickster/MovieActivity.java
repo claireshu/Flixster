@@ -118,11 +118,6 @@ public class MovieActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
-        // sets the now playing and popular texts to customFont
-        tvMode = (TextView) findViewById(R.id.tvMode);
-        tvMode.setTypeface(customFont);
-
         getSupportActionBar().setTitle(s);
 
         customFont = Typeface.createFromAsset(getAssets(), "fonts/Lato-Light.ttf");
@@ -154,6 +149,10 @@ public class MovieActivity extends AppCompatActivity {
 
         // for refreshing movies
         refresh();
+
+        // sets the now playing and popular texts to customFont
+        tvMode = (TextView) findViewById(R.id.tvMode);
+        tvMode.setTypeface(customFont);
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
