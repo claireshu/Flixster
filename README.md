@@ -26,6 +26,7 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 * [x] Search bar functionality added
+* [x] Back button in Movie Details screen added to return to Homepage 
 * [x] Toggle in Action Bar in between now playing and popular movies 
 * [x] Refresh display by dragging downwards for new data added 
 * [x] Launcher icon changed
@@ -34,7 +35,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/bkEQzKS.gif?1' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
